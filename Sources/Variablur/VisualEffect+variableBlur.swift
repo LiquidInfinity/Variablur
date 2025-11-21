@@ -35,30 +35,32 @@ public extension VisualEffect {
 		mask: Image,
 		isEnabled: Bool = true
 	) -> some VisualEffect {
+		// This multiplier is applied to the radius to match the behavior of SwiftUI's built-in `blur(radius:)`, which is to treat the radius as one standard deviation in the gaussian bell curve.
 		let radiusMultiplier: CGFloat = 3.0
+		let adjustedRadius = radius * radiusMultiplier
 		
 		return self.layerEffect(
 			library.variableBlur(
 				.boundingRect,
-				.float(radius * radiusMultiplier),
+				.float(adjustedRadius),
 				.float(CGFloat(maxSampleCount)),
 				.image(mask),
 				.float(verticalPassFirst ? 1 : 0),
 				.float(normalizeEdges ? 1 : 0)
 			),
-			maxSampleOffset: CGSize(width: radius * radiusMultiplier, height: radius * radiusMultiplier),
+			maxSampleOffset: CGSize(width: adjustedRadius, height: adjustedRadius),
 			isEnabled: isEnabled
 		)
 		.layerEffect(
 			library.variableBlur(
 				.boundingRect,
-				.float(radius * radiusMultiplier),
+				.float(adjustedRadius),
 				.float(CGFloat(maxSampleCount)),
 				.image(mask),
 				.float(verticalPassFirst ? 0 : 1),
 				.float(normalizeEdges ? 1 : 0)
 			),
-			maxSampleOffset: CGSize(width: radius * radiusMultiplier, height: radius * radiusMultiplier),
+			maxSampleOffset: CGSize(width: adjustedRadius, height: adjustedRadius),
 			isEnabled: isEnabled
 		)
 	}
