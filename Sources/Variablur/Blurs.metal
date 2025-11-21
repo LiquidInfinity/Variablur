@@ -28,7 +28,7 @@ half4 gaussianBlur1D(float2 position, SwiftUI::Layer layer, half radius, half2 a
 	
 	// Take the first sample.
 	// Calculate the weight for this sample in the weighted average using the Gaussian equation.
-	const half weight = gaussian(0.0h, radius / 2.0h);
+	const half weight = gaussian(0.0h, radius / 3.0h);
 	// Sample the pixel at the current position and multiply its color by the weight, to use in the weighted average.
 	// Each sample's color will be combined into the `weightedColorSum` variable (the numerator for the weighted average).
 	half4 weightedColorSum = layer.sample(position) * weight;
@@ -43,8 +43,8 @@ half4 gaussianBlur1D(float2 position, SwiftUI::Layer layer, half radius, half2 a
 			// Calculate the sample offset as a 2D vector.
 			const half2 offsetDistance = axisMultiplier * distance;
 			
-			// Calculate the sample's weight using the Gaussian equation. For the sigma value, we use half the blur radius so that the resulting bell curve fits nicely within the radius.
-			const half weight = gaussian(distance, radius / 2.0h);
+			// Calculate the sample's weight using the Gaussian equation. For the sigma value, we use one third of the blur radius so that the entire bell curve fits nicely within the radius.
+			const half weight = gaussian(distance, radius / 3.0h);
 			
 			// Add the weight to the total. Double the weight because we are taking two samples per iteration.
 			totalWeight += weight * 2.0h;

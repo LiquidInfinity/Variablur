@@ -33,26 +33,28 @@ public extension VisualEffect {
 		mask: Image,
 		isEnabled: Bool = true
 	) -> some VisualEffect {
-		self.layerEffect(
+		let radiusMultiplier: CGFloat = 3.0
+		
+		return self.layerEffect(
 			library.variableBlur(
 				.boundingRect,
-				.float(radius),
+				.float(radius * radiusMultiplier),
 				.float(CGFloat(maxSampleCount)),
 				.image(mask),
 				.float(verticalPassFirst ? 1 : 0)
 			),
-			maxSampleOffset: CGSize(width: radius , height: radius),
+			maxSampleOffset: CGSize(width: radius * radiusMultiplier, height: radius * radiusMultiplier),
 			isEnabled: isEnabled
 		)
 		.layerEffect(
 			library.variableBlur(
 				.boundingRect,
-				.float(radius),
+				.float(radius * radiusMultiplier),
 				.float(CGFloat(maxSampleCount)),
 				.image(mask),
 				.float(verticalPassFirst ? 0 : 1)
 			),
-			maxSampleOffset: CGSize(width: radius, height: radius),
+			maxSampleOffset: CGSize(width: radius * radiusMultiplier, height: radius * radiusMultiplier),
 			isEnabled: isEnabled
 		)
 	}

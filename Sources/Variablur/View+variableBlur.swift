@@ -72,7 +72,7 @@ public extension View {
 #Preview("Image with progressive blur") {
 	Image(systemName: "figure.walk.circle")
 		.font(.system(size: 300))
-		.variableBlur(radius: 30) { geometryProxy, context in
+		.variableBlur(radius: 10) { geometryProxy, context in
 			// draw a linear gradient across the entire mask from top to bottom
 			context.fill(
 				Path(geometryProxy.frame(in: .local)),
@@ -88,7 +88,7 @@ public extension View {
 #Preview("Vignette") {
 	Image(systemName: "rectangle.checkered")
 		.font(.system(size: 300))
-		.variableBlur(radius: 100) { geometryProxy, context in
+		.variableBlur(radius: 50) { geometryProxy, context in
 			// Add a blur to the mask to create the vignette effect
 			context.addFilter(
 				.blur(radius: 45)
@@ -112,7 +112,7 @@ public extension View {
 #Preview("Blur masked using a shape") {
 	Image(systemName: "circle.hexagongrid")
 		.font(.system(size: 300))
-		.variableBlur(radius: 30, verticalPassFirst: true) { geometryProxy, context in
+		.variableBlur(radius: 15, verticalPassFirst: true) { geometryProxy, context in
 			// draw a shape in an opaque color to apply the variable blur within the shape
 			context.fill(
 				Path(
@@ -135,7 +135,7 @@ public extension View {
 #Preview("Blur excluding a mask shape") {
 	Image(systemName: "circle.hexagongrid")
 		.font(.system(size: 300))
-		.variableBlur(radius: 30) { geometryProxy, context in
+		.variableBlur(radius: 15) { geometryProxy, context in
 			// Mask off a rounded rectangle where we don't want the blur applied
 			context.clip(
 				to: Path(
@@ -163,7 +163,7 @@ public extension View {
 #Preview("Variable blur around a mask shape") {
 	Image(systemName: "circle.hexagongrid")
 		.font(.system(size: 300))
-		.variableBlur(radius: 30) { geometryProxy, context in
+		.variableBlur(radius: 15) { geometryProxy, context in
 			// blur what we draw to the mask so that the final effect fades around the masked shape
 			context.addFilter(.blur(radius: 30))
 			
@@ -225,7 +225,7 @@ public extension View {
 				.foregroundStyle(.white)
 		}
 		.drawingGroup()
-		.variableBlur(radius: 180) { geometryProxy, context in
+		.variableBlur(radius: 90) { geometryProxy, context in
 			// add a blur to the mask to smooth out where the variable blur begins
 			context.addFilter(.blur(radius: 40))
 			
